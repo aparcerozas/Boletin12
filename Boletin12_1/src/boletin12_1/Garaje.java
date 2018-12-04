@@ -16,6 +16,7 @@ public class Garaje {
     private int numCoches;
     private Coche car = new Coche();
     private Date fechaInicio;
+    private double precio;
 
     public Garaje() {
         this.numCoches = 0;
@@ -45,10 +46,18 @@ public class Garaje {
         }
     }
     
+    public double pagar(){
+        double pago = Double.parseDouble(JOptionPane.showInputDialog("INTRODUZCA DINERO PARA PAGAR:"));
+        if(pago<precio){
+            pago = Double.parseDouble(JOptionPane.showInputDialog("EL DINERO NO ES SUFICIENTE. INTRODUZCA UNA MAYOR CANTIDAD:"));
+        }
+        return pago;
+    }
+    
     public void precio(){
         Date fechaFin = new Date();
-        int horas = (int)(fechaFin.getTime() - fechaInicio.getTime());
-        double precio = 0;
+        int horas = (int)((fechaFin.getTime() - fechaInicio.getTime())/1000);
+        precio = 0;
         if(horas <= 3){
             for(int i=0;i<horas;i++){
                 precio = precio + 1.5;
@@ -61,7 +70,7 @@ public class Garaje {
             }
         }
         precio = Math.round(precio);
-        double pago = Double.parseDouble(JOptionPane.showInputDialog("INTRODUZCA DINERO PARA PAGAR:"));
+        double pago = this.pagar();
         JOptionPane.showMessageDialog(null, "FACTURA\nMATRÍCULA COCHE: "
                 +car.getMatricula()+"\nTIEMPO: "+horas+"h"
                 +"\nPRECIO: "+precio+"\nDINERO RECIBIDO: "+pago
